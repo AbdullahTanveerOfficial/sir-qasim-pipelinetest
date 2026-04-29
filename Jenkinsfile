@@ -17,7 +17,7 @@ pipeline {
             steps {
                 echo 'Stopping any existing containers...'
                 dir('app') {
-                    sh 'docker compose down || true'
+                    sh 'docker-compose down || true'
                 }
             }
         }
@@ -26,7 +26,7 @@ pipeline {
             steps {
                 echo 'Building and starting containers...'
                 dir('app') {
-                    sh 'docker compose up -d --build'
+                    sh 'docker-compose up -d --build'
                 }
                 echo 'Waiting 40 seconds for app to be ready...'
                 sh 'sleep 40'
@@ -58,7 +58,7 @@ pipeline {
             steps {
                 echo 'Bringing deployment down...'
                 dir('app') {
-                    sh 'docker compose down'
+                    sh 'docker-compose down'
                 }
             }
         }
@@ -72,7 +72,6 @@ pipeline {
                     returnStdout: true
                 ).trim()
 
-                // If email is noreply, fallback to teacher's email
                 if (committerEmail.contains('noreply')) {
                     committerEmail = 'qasimalik@gmail.com'
                 }
