@@ -23,15 +23,15 @@ pipeline {
         }
 
         stage('Build & Deploy Application') {
-            steps {
-                echo 'Building and starting containers...'
-                dir('app') {
-                    sh 'docker-compose up -d --build'
-                }
-                echo 'Waiting 40 seconds for app to be ready...'
-                sh 'sleep 40'
-            }
+    steps {
+        echo 'Building and starting containers...'
+        dir('app') {
+            sh 'docker-compose up -d --build'
         }
+        echo 'Waiting 60 seconds for app to be ready...'
+        sh 'sleep 60'
+    }
+}
 
         stage('Run Selenium Tests') {
             steps {
