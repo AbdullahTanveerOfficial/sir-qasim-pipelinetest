@@ -32,7 +32,11 @@ pipeline {
                 echo 'Waiting 60 seconds for app to be ready...'
                 sh 'sleep 60'
                 echo 'Verifying app is running...'
-                sh 'curl -f http://localhost:3000 || echo "Frontend check done"'
+
+                // ✅ UPDATED: frontend now served via backend (port 5000)
+                sh 'curl -f http://localhost:5000 || echo "App check done"'
+
+                // backend health check remains
                 sh 'curl -f http://localhost:5000/api/auth/me || echo "Backend check done"'
             }
         }
@@ -59,7 +63,7 @@ pipeline {
                             -v $(pwd):/workspace \
                             -w /workspace \
                             markhobson/maven-chrome:jdk-11 \
-                            mvn test -Dapp.url=http://localhost:3000
+                            mvn test -Dapp.url=http://localhost:5000
                     '''
                 }
             }
